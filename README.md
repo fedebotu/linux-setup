@@ -10,7 +10,7 @@ I highly recommend using [Ghostty](https://ghostty.org/) as your terminal emulat
 
 I recommend appending these to `~/.config/ghostty/config` :
 
-```toml
+```
 ########################################################
 # CUSTOM 
 # from https://github.com/fedebotu/linux-setup
