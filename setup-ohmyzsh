@@ -54,4 +54,4 @@ rm -f /tmp/downloaded-zshrc
 echo ""
 echo "Installation complete! Running zsh for automatic setup..."
 zsh
-chsh -s $(which zsh) # JIC process was incomplete
+sudo chsh -s $(which zsh) $USER
