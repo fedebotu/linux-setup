@@ -31,6 +31,16 @@ async-backend = epoll
 
 This script sets up a complete ZSH environment for **Ubuntu Linux** with useful plugins and modern CLI tools.
 
+
+**Usage:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/fedebotu/linux-setup-scripts/main/setup-ohmyzsh | bash
+```
+
+**Note:** The script will prompt you to confirm before replacing your `.zshrc` file.
+
+
 **What it installs:**
 
 1. **ZSH** - The Z shell (via apt)
@@ -50,14 +60,6 @@ This script sets up a complete ZSH environment for **Ubuntu Linux** with useful 
 - Asks for confirmation before replacing your existing `.zshrc` (backs up to `~/.zshrc.backup`)
 - Sets ZSH as your default shell
 - All temporary files are downloaded to `/tmp` and cleaned up
-
-**Usage:**
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/fedebotu/linux-setup-scripts/main/setup-ohmyzsh | bash
-```
-
-**Note:** The script will prompt you to confirm before replacing your `.zshrc` file.
 
 
 
