@@ -3,13 +3,55 @@
 # 2. Autosuggestions: these are grabbed from history, use right arrow to accept. Super useful to retrieve previously used commands
 # 3. Syntax highlighting: self-explanatory
 # Last but not least: the beautiful Powerlevel 10k theme
+# Plus additional tools: lsd (better ls), vivid (LS_COLORS), atuin (shell history)
 
+# Install zsh
+echo "Installing zsh..."
+sudo apt update && sudo apt install -y zsh
+
+# Install vivid (LS_COLORS generator)
+echo "Installing vivid..."
+wget "https://github.com/sharkdp/vivid/releases/download/v0.10.1/vivid_0.10.1_amd64.deb" -P /tmp
+sudo dpkg -i /tmp/vivid_0.10.1_amd64.deb
+rm /tmp/vivid_0.10.1_amd64.deb
+
+# Install lsd (better ls)
+echo "Installing lsd..."
+wget "https://github.com/lsd-rs/lsd/releases/download/v1.2.0/lsd-musl_1.2.0_amd64.deb" -P /tmp
+sudo dpkg -i /tmp/lsd-musl_1.2.0_amd64.deb
+rm /tmp/lsd-musl_1.2.0_amd64.deb
+
+# Install atuin (shell history)
+echo "Installing atuin..."
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+
+# Install Oh My Zsh with plugins and theme
+echo "Installing Oh My Zsh and plugins..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended && \
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k && \
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions && \
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
-sed -i 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc && \
-sed -i 's/^plugins=.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc && \
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# Download and optionally replace .zshrc
+echo ""
+echo "Downloading .zshrc configuration from repository..."
+wget -q "https://raw.githubusercontent.com/fedebotu/linux-setup-scripts/main/.zshrc" -O /tmp/downloaded-zshrc
+
+echo ""
+read -p "Do you want to replace your .zshrc file with the repository version? (y/N): " -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Backing up existing .zshrc to ~/.zshrc.backup..."
+    [ -f ~/.zshrc ] && cp ~/.zshrc ~/.zshrc.backup
+    echo "Replacing .zshrc with repository version..."
+    cp /tmp/downloaded-zshrc ~/.zshrc
+    echo ".zshrc replaced successfully!"
+else
+    echo "Keeping existing .zshrc file. You can manually review /tmp/downloaded-zshrc if needed."
+fi
+rm -f /tmp/downloaded-zshrc
+
+echo ""
 echo "Installation complete! Running zsh for automatic setup..."
 zsh
 chsh -s $(which zsh) # JIC process was incomplete
