@@ -26,6 +26,21 @@ env = TERM=xterm-256color
 async-backend = epoll
 ```
 
+### Shell integration (click-to-move-cursor over SSH)
+
+Ghostty's shell integration enables features like click-to-move-cursor, even over SSH. The escape sequences are harmless in non-Ghostty terminals, so it's safe to keep in your `.zshrc` unconditionally. Append this to `~/.zshrc`:
+
+```zsh
+# Ghostty shell integration (for click-to-move-cursor over SSH)
+# The escape sequences are harmless in non-Ghostty terminals
+if [[ -n "$GHOSTTY_RESOURCES_DIR" ]]; then
+    source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+elif [[ -f "$HOME/.config/ghostty/ghostty-integration" ]]; then
+    export GHOSTTY_SHELL_FEATURES="cursor,title"
+    source "$HOME/.config/ghostty/ghostty-integration"
+fi
+```
+
 
 ## Setup with Oh My Zsh and more
 
