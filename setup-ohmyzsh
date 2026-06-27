@@ -9,17 +9,22 @@
 echo "Installing zsh..."
 sudo apt update && sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting
 
+# Helper: fetch + install the latest .deb release asset matching a name pattern
+install_latest_deb() { # $1=repo  $2=asset-name regex
+    local url
+    url=$(curl -fsSL "https://api.github.com/repos/$1/releases/latest" | grep -o "https://[^\"]*$2" | head -1)
+    wget -q "$url" -P /tmp
+    sudo dpkg -i "/tmp/$(basename "$url")"
+    rm "/tmp/$(basename "$url")"
+}
+
 # Install vivid (LS_COLORS generator)
 echo "Installing vivid..."
-wget "https://github.com/sharkdp/vivid/releases/download/v0.10.1/vivid_0.10.1_amd64.deb" -P /tmp
-sudo dpkg -i /tmp/vivid_0.10.1_amd64.deb
-rm /tmp/vivid_0.10.1_amd64.deb
+install_latest_deb sharkdp/vivid 'vivid_[^"]*_amd64\.deb'
 
 # Install lsd (better ls)
 echo "Installing lsd..."
-wget "https://github.com/lsd-rs/lsd/releases/download/v1.2.0/lsd-musl_1.2.0_amd64.deb" -P /tmp
-sudo dpkg -i /tmp/lsd-musl_1.2.0_amd64.deb
-rm /tmp/lsd-musl_1.2.0_amd64.deb
+install_latest_deb lsd-rs/lsd 'lsd-musl_[^"]*_amd64\.deb'
 
 # Install atuin (shell history)
 echo "Installing atuin..."
