@@ -98,3 +98,11 @@ atuin import auto
 Atuin also has a function to sync the history across devices, although I would rather keep it separate for now.
 
 You may edit the its config in `~/.config/atuin/config.toml` . I mainly changed the `inline_height = 10` for a more compact history display.
+
+
+---
+
+## Additions (to be added, now just a simple hand-typed list)
+
+- Hunk: https://github.com/modem-dev/hunk -- displays diffs easily with a good TUI with optional agent annotations
+- Ponytail: https://github.com/dietrichgebert/ponytail -- the destroyer of AI slop
